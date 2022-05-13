@@ -1,0 +1,177 @@
+<aura:component description="ShowProjects" implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+    access="global" controller="ProjectController">
+    <aura:attribute name="projectDetails" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="projectRecord" type="Project__c" />
+    <!--Pagination-->
+    <aura:attribute name="viewQuantity" type="String" default="" />
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="pageNumber" type="Integer" default="1" />
+    <aura:attribute name="pageSize" type="Integer" default="6" />
+    <aura:attribute name="isLastPage" type="Boolean" default="false" />
+    <aura:attribute name="dataSize" type="Integer" />
+    <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
+    <!-- pop up -->
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="strRecId" type="String" />
+    <lightning:overlayLibrary aura:id="overlayLibDemo" />
+    <!-- UI -->
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.rtl.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.min.css'}" />
+    <ltng:require scripts="{!$Resource.MorDesign  + '/html-css/dashboard.js'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.min.css'}" />
+    <ltng:require styles="/html-css/dashboard.css,
+                          /html-css/bootstrap.rtl.min.css,
+                          /html-css/dashboard.rtl.css,
+                          /dist/css/bootstrap.rtl.min.css,
+                          /dist/css/bootstrap.min.css" scripts='/html-css/dashboard.js,
+                           /dist/js/bootstrap.bundle.min.js' afterScriptsLoaded="{!c.setup}" />
+    <!-- UI -->
+    <!-- confirm delete -->
+    <div class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">                 
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this Project?</b></center>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleDeleteRecord}'/>
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>                  
+                    </footer>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+    </div>
+    <!-- confirm delete -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Projects</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <div onkeyup="{! c.handleSerialNumberKeyUp }">
+                                <lightning:input aura:id="asset-search" name="asset-search" label="Search"
+                                    placeholder="Search" type="search" />
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
+                            onclick="{!c.handleShowModal}">Create</button>
+                            <div>
+                                <lightning:select label="Choose" name="" aura:id="choose"  onchange="{!c.filterDate}">
+                                    <option value="0"></option>
+                                    <option  value="1">Last Week</option>
+                                    <option  value="2">Last Month</option>
+                                </lightning:select>
+                            </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-sm" id="task-content">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Country</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>PM</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Leader</th>
+                            <th>Technology</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.data}" var="item">
+                            <tr>
+                                <td>
+                                    <ui:outputText value="{!item.Id__c}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Country__c}" />
+                                </td>
+                                <td>
+                                    <a href="{!'/' + item.Id}">{!item.Name}</a>
+                                </td>
+                                <td>
+                                    <a href="{!'/' + item.Company__r.Id}">{!item.Company__r.Name}</a>
+                                </td>
+                                <td>
+                                    <a href="{!'/' + item.PM__r.Id}">{!item.PM__r.Name}</a>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Type__c}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Status__c}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Start_Date__c}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.End_Date__c}" />
+                                </td>
+                                <td>
+                                    <a href="{!'/' + item.Leader__r.Id}">{!item.Leader__r.Name}</a>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Technology__c}" />
+                                </td>
+                                <td>
+                                    <div class="dropup" aura:id="svg_content">
+                                        <button class="dropbtn">
+                                            ⋮
+                                        </button>
+                                        <div class="dropup-content">
+                                            <a onclick="{!c.editProject}" id="{!item.Id}">Edit</a>
+                                            <a name="" onclick="{!c.handleConfirmDialog}" id="{!item.Id}">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 show-list">
+                            <p>{!v.viewQuantity}</p>
+                                    <label>
+                                        <b>Show:</b> &nbsp;
+                                    </label>
+                            <ul class="limit-page">
+                                <li><a href="" onclick="{!c.viewChange20}">20</a></li>&nbsp;
+                                <li><a href="" onclick="{!c.viewChange50}">50</a></li>&nbsp;
+                                <li><a href="" onclick="{!c.viewChange100}">100</a></li>
+                            </ul>
+                        </div>
+                        <nav class="col-md-6 pagi" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <lightning:buttonGroup>
+                                    <li class="page-item">
+                                        <lightning:button variant="brand-outline" label="Prev" title="title"
+                                        onclick="{! c.handlePrev }" class="slds-m-left_x-small" />
+                                    <lightning:button variant="brand-outline" label="Next" title="title"
+                                        onclick="{! c.handleNext }" class="slds-m-left_x-small" />
+                                    </li>
+                                </lightning:buttonGroup>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Pagination-->
+</aura:component>

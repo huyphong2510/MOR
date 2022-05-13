@@ -1,0 +1,14 @@
+<aura:component description="ShowMembers" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" controller="MemberController">
+
+        <aura:attribute name="strRecId" type="String" />
+    <lightning:overlayLibrary aura:id="overlayLibDemo"/>
+    
+
+   <!-- Create Project  -->
+    <lightning:recordForm
+        recordId = "{!v.recordId}"
+        objectApiName="Member__c"
+        layoutType="Full"
+        mode="edit" 
+        onsuccess="{!c.handleSuccess}"/>
+</aura:component>

@@ -1,0 +1,225 @@
+<aura:component description="ShowMembers" implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+    access="global" controller="MemberController">
+    <aura:attribute name="memberDetails" type="List" />
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="memberRecord" type="Member__c" />
+    <aura:attribute name="paginationList" type="Object" />
+    <!-- UI -->
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.rtl.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.min.css'}" />
+    <ltng:require scripts="{!$Resource.MorDesign  + '/html-css/dashboard.js'}" />
+    <!-- <ltng:require scripts="{!$Resource.MorDesign + '/html-css/dist/js/bootstrap.bundle.min.js'}" /> -->
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.min.css'}" />
+    <ltng:require styles="/html-css/dashboard.css,
+                          /html-css/bootstrap.rtl.min.css,
+                          /html-css/dashboard.rtl.css,
+                          /dist/css/bootstrap.rtl.min.css,
+                          /dist/css/bootstrap.min.css" scripts='/html-css/dashboard.js,
+                           /dist/js/bootstrap.bundle.min.js' afterScriptsLoaded="{!c.setup}" />
+    <!-- UI -->
+    <!-- confirm delete -->
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false" />
+    <!-- confirm delete -->
+
+    <!-- Search -->
+
+    <!--Pagination-->
+    <aura:attribute name="viewQuantity" type="String" default="" />
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="pageNumber" type="Integer" default="1" />
+    <aura:attribute name="pageSize" type="Integer" default="6" />
+    <aura:attribute name="isLastPage" type="Boolean" default="false" />
+    <aura:attribute name="totalPage" type="Integer" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <!-- pop up -->
+    <lightning:overlayLibrary aura:id="overlayLibDemo" />
+    <aura:attribute name="strRecordId" type="String" />
+
+    <!-- pop up -->
+
+    <!-- confirm delete -->
+    <div class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this member?</b></center>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleDeleteRecord}' />
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}' />
+                    </footer>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </aura:if>
+    </div>
+    <!-- confirm delete -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Member</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div onkeyup="{! c.handleSerialNumberKeyUp }">
+                            <lightning:input aura:id="asset-search" name="asset-search" label="Search"
+                                placeholder="Search" type="search" />
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
+                            onclick="{!c.handleShowModal}">Create</button>
+                        <div>
+                            <lightning:select label="Choose" name="" aura:id="choose" onchange="{!c.filterDate}">
+                                <option value="0"></option>
+                                <option value="1">This Month</option>
+                                <option value="2">Last Month</option>
+                                <option value="3">Last Year</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <lightning:icon iconName="action:approval" size="x-small" alternativeText="Audio file"
+                            title="Audio" />Active
+                        <lightning:icon iconName="action:user" size="x-small" alternativeText="Audio file"
+                            title="Audio" />On
+                        <lightning:icon iconName="action:new_person_account" size="x-small" alternativeText="Audio file"
+                            title="Audio" />On Going
+                        <lightning:icon iconName="action:close" size="x-small" alternativeText="Audio file"
+                            title="Audio" />Resign
+                        <table class="table table-striped table-sm" id="task-content">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col"> Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Grade</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Contract</th>
+                                    <th scope="col">Onboard</th>
+                                    <th scope="col">Review Date</th>
+                                    <th scope="col">Skill</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Note</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.paginationList}" var="item">
+                                    <tr>
+                                        <td>
+                                            <aura:if isTrue="{!item.Status__c == 'Active'}">
+                                                <lightning:icon iconName="action:approval" size="xx-small"
+                                                    alternativeText="Audio file" title="Audio" />
+                                            </aura:if>
+                                            <aura:if isTrue="{!item.Status__c == 'On'}">
+                                                <lightning:icon iconName="action:user" size="xx-small"
+                                                    alternativeText="Audio file" title="Audio" />
+                                            </aura:if>
+                                            <aura:if isTrue="{!item.Status__c == 'Ongoing'}">
+                                                <lightning:icon iconName="action:new_person_account" size="xx-small"
+                                                    alternativeText="Audio file" title="Audio" />
+                                            </aura:if>
+                                            <aura:if isTrue="{!item.Status__c == 'Resigned'}">
+                                                <lightning:icon iconName="action:close" size="xx-small"
+                                                    alternativeText="Audio file" title="Audio" />
+                                            </aura:if>
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Id__c}" />
+                                        </td>
+                                        <td>
+                                            <a href="{!'/' + item.Id}">{!item.Name}</a>
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Email__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Phone__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Grade__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Department__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Contract__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Onboard__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Review_Date__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Skill__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Status__c}" />
+                                        </td>
+                                        <td>
+                                            <ui:outputText value="{!item.Note__c}" />
+                                        </td>
+                                        <td>
+                                            <div class="dropup" aura:id="svg_content">
+                                                <button class="dropbtn">
+                                                    ⋮
+                                                </button>
+                                                <div class="dropup-content">
+                                                    <a onclick="{!c.editMember}" id="{!item.Id}">Edit</a>
+                                                    <a name="" onclick="{!c.handleConfirmDialog}"
+                                                        id="{!item.Id}">Delete</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </aura:iteration>
+                            </tbody>
+
+                        </table>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6 show-list">
+                                    <p>{!v.viewQuantity}</p>
+                                    <label>
+                                        <b>Show:</b> &nbsp;
+                                    </label>
+                                    <ul class="limit-page">
+                                        <li><a href="" onclick="{!c.viewChange20}">20</a></li>&nbsp;
+                                        <li><a href="" onclick="{!c.viewChange50}">50</a></li>&nbsp;
+                                        <li><a href="" onclick="{!c.viewChange100}">100</a></li>
+                                    </ul>
+                                </div>
+                                <nav class="col-md-6 pagi" aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <lightning:buttonGroup>
+                                            <li class="page-item">
+                                                <lightning:button variant="brand-outline" label="Prev" title="title"
+                                                    onclick="{! c.handlePrev }" class="slds-m-left_x-small" />
+                                                <lightning:button variant="brand-outline" label="Next" title="title"
+                                                    onclick="{! c.handleNext }" class="slds-m-left_x-small" />
+                                            </li>
+                                        </lightning:buttonGroup>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Pagination-->
+</aura:component>

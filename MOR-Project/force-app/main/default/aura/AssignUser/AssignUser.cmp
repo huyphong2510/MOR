@@ -1,0 +1,23 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+    <aura:attribute name="record" type="object" />
+    <force:recordData aura:id="recordHandler" fields="Id" recordId="{!v.recordId}" targetError="{!v.recordError}"
+        recordUpdated="{!c.handleRecordUpdated}" />
+    <aura:attribute name="recordSaveError" type="String" default="" />
+    <aura:attribute name="strRecordId" type="String" />
+    <lightning:overlayLibrary aura:id="overlayLibDemo" />
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+            <div class="slds-modal__content slds-p-around_medium">
+                <lightning:recordEditForm aura:id="editform" onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}"
+                    recordId="{!v.strRecordId}" objectApiName="Task__c">
+                    <lightning:messages />
+                    <lightning:inputField fieldName="Assigner__c" aura:id="prjName" />
+
+                    <div class="slds-m-top_medium">
+                        <lightning:button variant="brand" type="submit" name="save" label="Save" />
+                    </div>
+                </lightning:recordEditForm>
+            </div>
+</aura:component>

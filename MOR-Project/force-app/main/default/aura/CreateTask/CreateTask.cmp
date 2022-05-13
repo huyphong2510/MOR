@@ -1,0 +1,14 @@
+<aura:component description="ShowTasks" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" 
+access="global" controller="TaskController">
+
+ <aura:attribute name="strRecId" type="String" />
+    <lightning:overlayLibrary aura:id="overlayLibDemo"/>
+    
+   <!-- Create Project  -->
+    <lightning:recordForm
+        recordId = "{!v.recordId}"
+        objectApiName="Task__c"
+        layoutType="Full"
+        mode="edit" 
+/>
+</aura:component>

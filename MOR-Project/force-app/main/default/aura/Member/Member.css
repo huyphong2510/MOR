@@ -1,0 +1,26 @@
+.THIS bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.THIS .main
+{flex:0 0 auto;width:25%}
+.THIS .row-cols-md-5
+{flex:0 0 auto;width:20%}
+.THIS .row-cols-md-6
+{flex:0 0 auto;width:16.6666666667%}
+.THIS .col-md-auto{flex:0 0 auto;width:auto}
+.THIS .col-md-1{flex:0 0 auto;width:8.33333333%}
+.THIS .col-md-2{flex:0 0 auto;width:16.66666667%}
+.THIS .col-md-3{flex:0 0 auto;width:25%}
+.THIS .main{flex:0 0 auto;width:33.33333333%}
+.THIS .col-md-5{flex:0 0 auto;width:41.66666667%}
+.THIS .col-md-6{flex:0 0 auto;width:50%}
+.THIS .col-md-7{flex:0 0 auto;width:58.33333333%}
+.THIS .col-md-8{flex:0 0 auto;width:66.66666667%}
+.THIS .col-md-9{flex:0 0 auto;width:75%}
+.THIS .col-md-10{flex:0 0 auto;width:83.33333333%}
+.THIS .col-md-11{flex:0 0 auto;width:91.66666667%}
+.THIS .col-md-12{flex:0 0 auto;width:100%}

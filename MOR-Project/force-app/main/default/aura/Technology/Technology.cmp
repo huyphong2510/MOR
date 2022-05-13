@@ -1,0 +1,114 @@
+<aura:component description="ShowTechnologies" implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+    access="global" controller="TechnologyController">
+    <aura:attribute name="technologyDetails" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="technologyRecord" type="Technology__c" />
+    <!-- search-->
+    <aura:attribute name="delete" type="String" default="" />
+    <aura:attribute name="searchKey" type="String" />
+    <aura:attribute name="Message" type="boolean" default="false" />
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0" />
+    <aura:attribute name="myBool" type="Boolean" default="true" />
+    <aura:attribute name="searchTerm" type="String" default="" />
+    <!-- search-->
+
+    <!--Pagination-->
+    <aura:attribute name="technologyList" type="List" />
+    <aura:attribute name="paginationList" type="List" />
+    <aura:attribute name="pageSize" type="Integer" default="5" />
+    <aura:attribute name="totalSize" type="Integer" />
+    <aura:attribute name="start" type="Integer" />
+    <aura:attribute name="end" type="Integer" />
+    <!-- pop up -->
+    <aura:attribute name="strRecId" type="String" />
+    <lightning:overlayLibrary aura:id="overlayLibDemo" />
+    <!-- UI -->
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dashboard.rtl.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/bootstrap.min.css'}" />
+    <ltng:require scripts="{!$Resource.MorDesign  + '/html-css/dashboard.js'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.rtl.min.css'}" />
+    <ltng:require styles="{!$Resource.MorDesign + '/html-css/dist/css/bootstrap.min.css'}" />
+    <ltng:require styles="/html-css/dashboard.css,
+                       /html-css/bootstrap.rtl.min.css,
+                       /html-css/dashboard.rtl.css,
+                       /dist/css/bootstrap.rtl.min.css,
+                       /dist/css/bootstrap.min.css" scripts='/html-css/dashboard.js,
+                        /dist/js/bootstrap.bundle.min.js' afterScriptsLoaded="{!c.setup}" />
+    <!-- UI -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Technology</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <div onkeyup="{! c.handleSerialNumberKeyUp }">
+                                <lightning:input aura:id="asset-search" name="asset-search" label="Search"
+                                    placeholder="Search" type="search" />
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
+                            onclick="{!c.handleShowModal}">Create</button>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-sm" id="task-content">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.paginationList}" var="item">
+                            <tr>
+                                <td>
+                                    <ui:outputText value="{!item.Name}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.Code__c}" />
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 show-list">
+                            <p>{!v.viewQuantity}</p>
+                            <label>
+                                <b>Show:</b> &nbsp;
+                            </label>
+                            <ul class="limit-page">
+                                <li><a href="" onclick="{!c.viewChange20}">20</a></li>&nbsp;
+                                <li><a href="" onclick="{!c.viewChange50}">50</a></li>&nbsp;
+                                <li><a href="" onclick="{!c.viewChange100}">100</a></li>
+                            </ul>
+                        </div>
+                        <nav class="col-md-6 pagi" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <lightning:buttonGroup>
+                                    <li class="page-item">
+                                        <lightning:button variant="brand-outline" label="Prev" title="title"
+                                            onclick="{! c.handlePrev }" class="slds-m-left_x-small" />
+                                        <lightning:button variant="brand-outline" label="Next" title="title"
+                                            onclick="{! c.handleNext }" class="slds-m-left_x-small" />
+                                    </li>
+                                </lightning:buttonGroup>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--End Pagination-->
+        </div>
+    </div>
+
+
+</aura:component>
