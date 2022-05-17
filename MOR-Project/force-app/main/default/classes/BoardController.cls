@@ -3,7 +3,7 @@ public with sharing class BoardController {
     public static kanbanWrap getBoards(String objName, String[] objFields, String kanbanField) {
         // List <Board__c> lstPickvals = new List <Board__c> ();    
         String[] lstPickvals = new String[] {'To Do','Pending','In Progress','Reviewing','Done'};
-        String query = 'SELECT OwnerId,Project__r.name, Id, Name, Status__c FROM Board__c';  
+        String query = 'SELECT Task__r.name,Task__r.Status__c,OwnerId, Id, Name, Status__c FROM Board__c';  
         return new kanbanWrap(Database.query(query), lstPickvals);
     }
 

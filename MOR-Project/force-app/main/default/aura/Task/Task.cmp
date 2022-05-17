@@ -55,6 +55,7 @@
     <force:recordData aura:id="recordHandler" fields="Id" recordId="{!v.recordId}" targetError="{!v.recordError}"
         recordUpdated="{!c.handleRecordUpdated}" />
   <!-- confirm delete -->
+  
   <div class="slds-m-around_xx-large">
     <aura:if isTrue="{!v.showConfirmDialog}">
         <div role="dialog" class="slds-modal slds-fade-in-open ">

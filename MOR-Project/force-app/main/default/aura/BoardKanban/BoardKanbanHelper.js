@@ -1,10 +1,9 @@
 ({
 	updatePickVal : function(component, recId, pField, pVal) {
-        // console.log("helper");
-        // console.log(recId);
-        // console.log(pField);
-        // console.log(pVal);
-		var action = component.get("c.getUpdateStage");
+         console.log("helper");
+         console.log(recId);
+         console.log(pVal);
+		var action = component.get("c.getUpdateStatus");
         action.setParams({
             recId:recId,
             kanbanField:'Status__c',

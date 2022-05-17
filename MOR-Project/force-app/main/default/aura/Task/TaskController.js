@@ -17,6 +17,7 @@
     },
     handleDeleteRecord: function (component, event, helper) {
         var idx = event.target.id;
+        console.log(idx);
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             "title": "Notification",
@@ -249,6 +250,38 @@
     },
     handleConfirmDialog: function (component, event, helper) {
         component.set('v.showConfirmDialog', true);
+        var idx = event.target.id;
+        console.log(idx);
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "title": "Notification",
+            "message": "Delete records successfully!!",
+            "type": "SUCCESS"
+        });
+        var action = component.get('c.deleteTask');
+        action.setParams({
+            delid: idx,
+        })
+        action.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {     
+                $A.get('e.force:refreshView').fire(); 
+                 
+            }
+            
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message")
+                    }
+                } else {
+                    console.log('Unknow Error');
+                }
+            }
+        });
+        $A.enqueueAction(action);
+         
     },
 
     handleConfirmDialogNo: function (component, event, helper) {

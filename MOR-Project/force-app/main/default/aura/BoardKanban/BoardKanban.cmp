@@ -51,16 +51,11 @@
                                         </div>
                                         <div class="slds-tile__detail slds-text-body_small">
                                             <a href="{!'/' + Project__c}">
-                                                {!objRecord.Project__r.Name}
+                                                {!objRecord.Task__r.Name}
                                             </a>
                                         </div>                                   
-                                        <div class="slds-tile__detail slds-text-body_small">
-                                            <a href="{!'/' + Project__c}">
-                                                {!objRecord.Project__r.Name}
-                                            </a>
-                                        </div>
-                                        <div class="slds-tile__detail slds-text-body_small">
-                                            <p class="slds-truncate" title="">Sprint </p>
+                                        <div>
+                                            <p>Status: {!objRecord.Task__r.Status__c}</p>
                                         </div>
                                     </h3>
 
