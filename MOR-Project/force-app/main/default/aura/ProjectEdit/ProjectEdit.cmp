@@ -10,6 +10,7 @@
     <lightning:overlayLibrary aura:id="overlayLibDemo" />
     <lightning:notificationsLibrary aura:id="notifLib" />
     <aura:attribute name="isOpen" type="boolean" default="false" />
+
             <div class="slds-modal__content slds-p-around_medium">
                 <lightning:recordEditForm aura:id="editform" onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}"
                     recordId="{!v.strRecordId}" objectApiName="Project__c">

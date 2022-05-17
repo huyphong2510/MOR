@@ -1,22 +1,24 @@
 ({
-    doInit: function(component, event, helper) {
-        var action = component.get("c.getKanbanWrap");
+    doInit: function (component, event, helper) {
+        var action = component.get("c.getBoards");
         action.setParams({
-            objName:"Board__c",
-            objFields:"Id, Name",
-            kanbanField:component.get("v.kanbanPicklistField")
+            "objName":component.get("v.objName"),
+            "objFields":component.get("v.objFields"),
+            "kanbanField":component.get("v.kanbanPicklistField")
         });
-        action.setCallback(this, function(response){
+
+        action.setCallback(this, function (response) {
             var state = response.getState();
-            console.log(state);
             if (state === "SUCCESS") {
-                console.dir(response.getReturnValue());
-                component.set("v.kanbanData", response.getReturnValue());
+                var resultData = response.getReturnValue();  
+                console.log('data:', resultData);
+                component.set("v.kanbanData", resultData);
             }
         });
         $A.enqueueAction(action);
     },
     doView: function(component, event, helper) {
+        console.log("doView");
         var editRecordEvent = $A.get("e.force:navigateToSObject");
         editRecordEvent.setParams({
             "recordId": event.target.id
@@ -24,22 +26,32 @@
         editRecordEvent.fire();
     },
     allowDrop: function(component, event, helper) {
+        console.log("allowDrop");
         event.preventDefault();
     },
     
     drag: function (component, event, helper) {
-        event.dataTransfer.setData("text", event.target.id);
+        var idx = event.target.id;
+        //  console.log(idx);
+        console.log("drag");
+        event.dataTransfer.setData("text", idx);
     },
+
+    
     
     drop: function (component, event, helper) {
+        var action = component.get("c.getUpdateStatus");
         event.preventDefault();
         var data = event.dataTransfer.getData("text");
+         console.log('Id:', data);
         var tar = event.target;
         while(tar.tagName != 'ul' && tar.tagName != 'UL')
             tar = tar.parentElement;
         tar.appendChild(document.getElementById(data));
-        console.log('aaaaaaaaaaaaa   :   ' + tar.getAttribute('data-Pick-Val'));
-        document.getElementById(data).style.backgroundColor = "#ffb75d";
+        console.log('status   :   ' + tar.getAttribute('data-Pick-Val'));
+        document.getElementById(data).style.backgroundColor = "#d7f9fa";
+        $A.enqueueAction(action);
         helper.updatePickVal(component,data,component.get("v.kanbanPicklistField"),tar.getAttribute('data-Pick-Val'));
-    }
+    },
+
 })

@@ -72,8 +72,7 @@
                             <lightning:input aura:id="asset-search" name="asset-search" label="Search"
                                 placeholder="Search" type="search" />
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
-                            onclick="{!c.handleShowModal}">Create</button>
+                        
                         <div>
                             <lightning:select label="Choose" name="" aura:id="choose" onchange="{!c.filterDate}">
                                 <option value="0"></option>
@@ -82,6 +81,8 @@
                                 <option value="3">Last Year</option>
                             </lightning:select>
                         </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-task" style="height: 33px; margin-top:auto;"
+                            onclick="{!c.handleShowModal}">Create</button>
                     </div>
                 </div>
                 <div>

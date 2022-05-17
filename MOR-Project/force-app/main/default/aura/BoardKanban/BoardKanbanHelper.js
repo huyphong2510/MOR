@@ -1,12 +1,14 @@
 ({
 	updatePickVal : function(component, recId, pField, pVal) {
-        //Id recId, String kanbanField, String kanbanNewValue
-        console("drag");
+        // console.log("helper");
+        // console.log(recId);
+        // console.log(pField);
+        // console.log(pVal);
 		var action = component.get("c.getUpdateStage");
         action.setParams({
-            "recId":recId,
-            "kanbanField":pField,
-            "kanbanNewValue":pVal
+            recId:recId,
+            kanbanField:'Status__c',
+            kanbanNewValue:pVal
         });
         action.setCallback(this, function(response){
             var state = response.getState();

@@ -1,4 +1,4 @@
-.THIS {} 
+
 .THIS .slds-item {
     border: 1px solid #d8dde6;
     border-radius: 0.25rem;
@@ -11,6 +11,7 @@
     border: 2px solid #d8dde6;
     margin: 0.05rem;
     border-radius: .25rem;
+    width: 20px;
 }
 .THIS .cusFontStyle {
     font-size: initial;

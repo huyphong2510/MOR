@@ -38,5 +38,6 @@
         alert('thanks for like Us :)');
         component.set("v.isOpen", false);
     },
+ 
 
 })

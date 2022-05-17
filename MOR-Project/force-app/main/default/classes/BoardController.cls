@@ -1,26 +1,21 @@
-public class BoardController {
+public with sharing class BoardController {
     @AuraEnabled
-    public static kanbanWrap getKanbanWrap(String objName, String[] objFields, String kanbanField) {
-        System.debug(objName);
-        System.debug(objFields);
-        List<String> lstPickvals=new List<String>();
-        for (Schema.PicklistEntry a : Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(kanbanField).getDescribe().getPickListValues())
-            lstPickvals.add(a.getValue());
-        System.debug(lstPickvals);
-        
-        String query = 'SELECT Id,' + objFields + 'FROM' + objName;
-        System.debug(query);
-        
+    public static kanbanWrap getBoards(String objName, String[] objFields, String kanbanField) {
+        // List <Board__c> lstPickvals = new List <Board__c> ();    
+        String[] lstPickvals = new String[] {'To Do','Pending','In Progress','Reviewing','Done'};
+        String query = 'SELECT OwnerId,Project__r.name, Id, Name, Status__c FROM Board__c';  
         return new kanbanWrap(Database.query(query), lstPickvals);
     }
+
     @AuraEnabled
-    public static String getUpdateStage(Id recId, String kanbanField, String kanbanNewValue) {
-        SObject o1 = recId.getSObjectType().newSObject(recId);
-        o1.put(kanbanField,kanbanNewValue);
-        update o1;
-        return 'Success';
+    public static String getUpdateStatus(Id recId, String kanbanField, String kanbanNewValue) {
+            System.debug(recId);
+            SObject o1 = recId.getSObjectType().newSObject(recId);
+            o1.put(kanbanField,kanbanNewValue);
+            update o1;
+            return 'Success';
+
     }
-    
     
     
     public class kanbanWrap{
@@ -28,10 +23,10 @@ public class BoardController {
         public List<sObject> records {get;set;}
         @AuraEnabled
         public List<String> pickVals {get;set;}
-        
         public kanbanWrap(List<sObject> recs, List<String> pVals){
             this.records = recs;
             this.pickVals = pVals;
         }
     }
+
 }

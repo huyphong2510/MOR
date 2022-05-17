@@ -1,0 +1,11 @@
+.THIS a:link {
+  color: rebeccapurple ;
+  text-decoration: underline;
+  cursor: auto;
+}
+
+.THIS a:visited {
+  color:gray ;
+  text-decoration: underline;
+  cursor: auto;
+}

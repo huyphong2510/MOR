@@ -64,8 +64,7 @@
                                     placeholder="Search" type="search" />
                             </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
-                            onclick="{!c.handleShowModal}">Create</button>
+                        
                             <div>
                                 <lightning:select label="Choose" name="" aura:id="choose"  onchange="{!c.filterDate}">
                                     <option value="0"></option>
@@ -73,6 +72,8 @@
                                     <option  value="2">Last Month</option>
                                 </lightning:select>
                             </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary add-task"
+                            onclick="{!c.handleShowModal}" style="height: 32px; margin-top:auto">Create</button>
                     </div>
                 </div>
                 <table class="table table-striped table-sm" id="task-content">
