@@ -18,23 +18,21 @@
             </div>
         </div>
     </div>
-    <div style="padding:0.5rem;">
+<div style="padding:0.5rem;">
         <aura:iteration var="pickVal" items="{!v.kanbanData.pickVals}">
-            <div class="stageContainer" style="{!'width:calc(100vw/'+(v.kanbanData.pickVals.length+0.5)+')'}">
+            <div class="stageContainer" style="width:calc(100vw/5.88)">
                 <div class="slds-grid slds-grid_vertical">
                     <div>
                         <div class="slds-media slds-no-space slds-has-divider_bottom-space slds-media_center"
                             style="{!'width:calc(100vw/'+(v.kanbanData.pickVals.length+1)+')'}">
                             <div class="slds-media__body">
-                                <h1 class="slds-page-header__title slds-align-middle slds-truncate" title="{!pickVal}">
+                                <h1 class="slds-page-header__title slds-align-middle slds-truncate"
+                                    style="background-color: e1f3f5; width:100%" title="{!pickVal}">
                                     {!pickVal}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-
-            </div>
 
                 <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone"
                     data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
