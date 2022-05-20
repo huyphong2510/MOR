@@ -7,3 +7,9 @@
 .THIS .icn-green svg {
     fill: green;
 }
+.THIS .icn-red svg {
+    fill: red;
+}
+.THIS .icn-violet svg {
+    fill: #ff6ef0;
+}

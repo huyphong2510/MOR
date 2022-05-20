@@ -18,13 +18,14 @@
                     <lightning:inputField fieldName="Name" aura:id="prjName" />
                     <lightning:inputField fieldName="Id__c" />
                     <lightning:inputField fieldName="OwnerID" />
-                    <lightning:outputField fieldName="Start_Date__c" />
+                    <lightning:inputField fieldName="Start_Date__c" />      
                     <lightning:inputField fieldName="End_Date__c" />
                     <lightning:inputField fieldName="Leader__c" />
                     <lightning:inputField fieldName="Technology__c" />
                     <lightning:inputField fieldName="Type__c" />
                     <lightning:inputField fieldName="Deadline__c" />
                     <lightning:inputField fieldName="Status__c" />
+                    <lightning:inputField fieldName="Board__c" />
                     <lightning:inputField fieldName="PM__c" />
                     <lightning:inputField fieldName="Company__c" />
                     <div class="slds-m-top_medium">

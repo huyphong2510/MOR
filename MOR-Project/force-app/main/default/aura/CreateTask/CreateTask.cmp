@@ -10,5 +10,6 @@ access="global" controller="TaskController">
         objectApiName="Task__c"
         layoutType="Full"
         mode="edit" 
+        onsuccess="{!c.handleSuccess}"
 />
 </aura:component>

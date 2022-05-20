@@ -15,24 +15,26 @@
             });
 
     },
-    handleSerialNumberKeyUp: function (component, evt, helper) {
-        var isEnterKey = evt.keyCode === 13;
-        if (isEnterKey) {
-            component.set('v.hasMoreAsset', true)
-            component.set('v.hasMore', true)
-            component.set('v.assets', [])
-            component.set('v.serialNumbers', [])
-            component.set('v.totalRecordAsset', 0)
-            var queryTerm = component.find('asset-search').get('v.value');
-            let page = 0;
-            component.set("v.page", page);
-            component.set('v.chooseAssets', [])
-            component.set('v.isRendered', false)
-            component.set('v.isRenderedChild', false)
-            component.set('v.searchTerm', queryTerm);
-            helper.handleSearch(component, queryTerm, page);
-        }
-    },
+
+    // when type keywords then Enter
+    // handleSerialNumberKeyUp: function (component, evt, helper) {
+    //     var isEnterKey = evt.keyCode === 13;
+    //     if (isEnterKey) {
+    //         component.set('v.hasMoreAsset', true)
+    //         component.set('v.hasMore', true)
+    //         component.set('v.assets', [])
+    //         component.set('v.serialNumbers', [])
+    //         component.set('v.totalRecordAsset', 0)
+    //         var queryTerm = component.find('asset-search').get('v.value');
+    //         let page = 0;
+    //         component.set("v.page", page);
+    //         component.set('v.chooseAssets', [])
+    //         component.set('v.isRendered', false)
+    //         component.set('v.isRenderedChild', false)
+    //         component.set('v.searchTerm', queryTerm);
+    //         helper.handleSearch(component, queryTerm, page);
+    //     }
+    // },
     handleSuccess: function (component, event, helper) {
         component.find('notifLib').showToast({
             "title": "Record updated!",
@@ -48,6 +50,7 @@
             "variant": "error"
         });
     },
+    // when type keywords then Enter
     handleSerialNumberKeyUp: function (component, evt, helper) {
         var isEnterKey = evt.keyCode === 13;
         if (isEnterKey) {
@@ -56,6 +59,8 @@
             helper.handleSearch(component, queryTerm);
         }
     },
+
+
     filterDate: function (component, event, helper) {
         var choose = component.find("choose").get("v.value");
         var action = component.get("c.filterMembers");
@@ -138,6 +143,8 @@
     },
     // Bổ sung
 
+
+    // get all members
     doInit: function (component, event, helper) {
         var action = component.get("c.fetchMembers");
         var pageSize = component.get("v.pageSize");

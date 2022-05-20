@@ -1,10 +1,16 @@
-<aura:component controller="BoardController" implements="flexipage:availableForAllPageTypes">
+<aura:component controller="BoardController" implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable">
     <aura:attribute name="objName" type="Object" />
     <aura:attribute name="objFields" type="String[]" />
+    <aura:attribute name="projectID" type="String" default="" />
     <aura:attribute name="kanbanPicklistField" type="String" />
     <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
     <aura:attribute name="kanbanData" type="BoardController.kanbanWrap" />
+    <!-- pop up-->
+    <lightning:overlayLibrary aura:id="overlayLibDemo" />
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false" />
+    <!-- pop up-->
 
+    <!-- header -->
     <div class="slds-page-header">
         <div class="slds-media">
             <div class="slds-media__figure">
@@ -13,36 +19,40 @@
                 </span>
             </div>
             <div class="slds-media__body">
-                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Board Sprint">Board Sprint
+                <h1 class="slds-page-header__title slds-truncate slds-align-middle" style="text-align: center;"
+                    title="Board Sprint">Board Sprint
                 </h1>
             </div>
         </div>
     </div>
+
+    <!-- create button -->
+    <lightning:button label="Create" title="Brand action" onclick="{! c.createBoard }" />
+
     <div style="padding:0.5rem;">
         <aura:iteration var="pickVal" items="{!v.kanbanData.pickVals}">
-            <div class="stageContainer" style="{!'width:calc(100vw/'+(v.kanbanData.pickVals.length+0.5)+')'}">
+            <div class="stageContainer" style="width:calc(100vw/5.88)">
                 <div class="slds-grid slds-grid_vertical">
                     <div>
                         <div class="slds-media slds-no-space slds-has-divider_bottom-space slds-media_center"
                             style="{!'width:calc(100vw/'+(v.kanbanData.pickVals.length+1)+')'}">
                             <div class="slds-media__body">
-                                <h1 class="slds-page-header__title slds-align-middle slds-truncate" title="{!pickVal}">
+                                <h1 class="slds-page-header__title slds-align-middle slds-truncate"
+                                    style="background-color: e1f3f5; width:100%" title="{!pickVal}">
                                     {!pickVal}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-
-            </div>
-
+                </div>
                 <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone"
-                    data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
-                    <aura:iteration var="objRecord" items="{!v.kanbanData.records}">
-                        <aura:if isTrue="{!pickVal == objRecord.Status__c}">
-                            <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
-                                id="{!objRecord.Id}">
-                                <article class="slds-tile slds-tile_board">
+                data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
+                <aura:iteration var="objRecord" items="{!v.kanbanData.records}">
+    <aura:if isTrue="{!and(pickVal == objRecord.Status__c, objRecord.Project__c == v.projectID ) }">
+                        <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
+                            id="{!objRecord.Id}" style="background-color: #f5feff;">
+                           <article class="slds-tile slds-tile_board" >
                                     <h3 class="slds-truncate" title="">
                                         <div class="slds-tile__detail slds-text-body_small">
                                             <a href="{!'/' + objRecord.Id}">
@@ -53,17 +63,23 @@
                                             <a href="{!'/' + Project__c}">
                                                 {!objRecord.Task__r.Name}
                                             </a>
-                                        </div>                                   
-                                        <div>
-                                            <p>Status: {!objRecord.Task__r.Status__c}</p>
                                         </div>
+                                        <div>
+                                            <p>Status: {!objRecord.Status__c}</p>
+                                        </div>
+                                        <div>
+                                            <p>Project: {!objRecord.Project__r.Name}</p>
+                                        </div>
+                                        <div>
+                                            <p>Assigner: {!objRecord.Assigner__r.Name}</p>
+                                        </div>                                           
                                     </h3>
-
+                                    <button class="button4" id="{!objRecord.Id}" onclick="{!c.editTask}">Edit</button>
                                 </article>
-                            </li>
-                        </aura:if>
-                    </aura:iteration>
-                </ul>
+                        </li>
+                    </aura:if>
+                </aura:iteration>
+            </ul>
             </div>
         </aura:iteration>
     </div>

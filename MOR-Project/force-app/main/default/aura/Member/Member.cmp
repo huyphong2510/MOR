@@ -72,7 +72,7 @@
                             <lightning:input aura:id="asset-search" name="asset-search" label="Search"
                                 placeholder="Search" type="search" />
                         </div>
-                        
+                        <!-- select option to filter -->
                         <div>
                             <lightning:select label="Choose" name="" aura:id="choose" onchange="{!c.filterDate}">
                                 <option value="0"></option>
@@ -81,12 +81,18 @@
                                 <option value="3">Last Year</option>
                             </lightning:select>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary add-task" style="height: 33px; margin-top:auto;"
-                            onclick="{!c.handleShowModal}">Create</button>
+                        <!-- select option to filter -->
+
+                        <!-- create button -->
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-task"
+                            style="height: 33px; margin-top:auto;" onclick="{!c.handleShowModal}">Create</button>
+                        <!-- create button -->
                     </div>
                 </div>
+
                 <div>
                     <div>
+                        <!-- Explain user the icon of status -->
                         <lightning:icon iconName="action:approval" size="x-small" alternativeText="Audio file"
                             title="Audio" />Active
                         <lightning:icon iconName="action:user" size="x-small" alternativeText="Audio file"
@@ -95,6 +101,9 @@
                             title="Audio" />On Going
                         <lightning:icon iconName="action:close" size="x-small" alternativeText="Audio file"
                             title="Audio" />Resign
+                        <!-- Explain user the icon of status -->
+
+                        <!-- start table  -->
                         <table class="table table-striped table-sm" id="task-content">
                             <thead class="thead-dark">
                                 <tr>
@@ -178,7 +187,7 @@
                                                 </button>
                                                 <div class="dropup-content">
                                                     <a onclick="{!c.editMember}" id="{!item.Id}">Edit</a>
-                                                    <a name="" onclick="{!c.handleConfirmDialog}"
+                                                    <a name="" onclick="{!c.handleDeleteRecord}"
                                                         id="{!item.Id}">Delete</a>
 
                                                 </div>
@@ -188,10 +197,14 @@
 
                                 </aura:iteration>
                             </tbody>
-
                         </table>
+                        <!-- end table  -->
+
+
                         <div class="col-md-12">
                             <div class="row">
+
+                                <!-- show records quantity -->
                                 <div class="col-md-6 show-list">
                                     <p>{!v.viewQuantity}</p>
                                     <label>
@@ -203,6 +216,9 @@
                                         <li><a href="" onclick="{!c.viewChange100}">100</a></li>
                                     </ul>
                                 </div>
+                                <!-- show records quantity -->
+
+                                <!-- pagination -->
                                 <nav class="col-md-6 pagi" aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <lightning:buttonGroup>
@@ -215,6 +231,7 @@
                                         </lightning:buttonGroup>
                                     </ul>
                                 </nav>
+                                <!-- pagination -->
                             </div>
                         </div>
                     </div>
@@ -222,5 +239,4 @@
             </div>
         </div>
     </div>
-    <!--End Pagination-->
 </aura:component>

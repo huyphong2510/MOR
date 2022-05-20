@@ -3,7 +3,6 @@
     <aura:attribute name="projectDetails" type="List" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="url" type="String" />
-    <aura:attribute name="projectRecord" type="Project__c" />
     <!--Pagination-->
     <aura:attribute name="viewQuantity" type="String" default="" />
     <aura:attribute name="data" type="Object" />
@@ -42,7 +41,7 @@
                         <center><b>Are you sure you want to delete this Project?</b></center>
                     </div>
                     <footer class="slds-modal__footer">
-                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleDeleteRecord}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes'  onclick='{!c.handleDeleteRecord}'/>
                         <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>                  
                     </footer>
                 </div>
@@ -51,6 +50,7 @@
         </aura:if>
     </div>
     <!-- confirm delete -->
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
@@ -65,6 +65,7 @@
                             </div>
                         </div>
                         
+                            <!-- Filter Project -->
                             <div>
                                 <lightning:select label="Choose" name="" aura:id="choose"  onchange="{!c.filterDate}">
                                     <option value="0"></option>
@@ -72,10 +73,16 @@
                                     <option  value="2">Last Month</option>
                                 </lightning:select>
                             </div>
+                            <!-- Filter Project -->
+
+                            <!-- Button Create -->
                             <button type="button" class="btn btn-sm btn-outline-secondary add-task"
                             onclick="{!c.handleShowModal}" style="height: 32px; margin-top:auto">Create</button>
+                            <!-- Button Create -->
+
                     </div>
                 </div>
+                 <!-- Start table -->
                 <table class="table table-striped table-sm" id="task-content">
                     <thead class="thead-dark">
                         <tr>
@@ -136,7 +143,7 @@
                                         </button>
                                         <div class="dropup-content">
                                             <a onclick="{!c.editProject}" id="{!item.Id}">Edit</a>
-                                            <a name="" onclick="{!c.handleConfirmDialog}" id="{!item.Id}">Delete</a>
+                                            <a name="" onclick="{!c.handleDeleteRecord}" >Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -144,9 +151,12 @@
                         </aura:iteration>
                     </tbody>
                 </table>
+                <!-- End table -->
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6 show-list">
+
+                            <!-- View Project with quantity -->
                             <p>{!v.viewQuantity}</p>
                                     <label>
                                         <b>Show:</b> &nbsp;
@@ -156,7 +166,10 @@
                                 <li><a href="" onclick="{!c.viewChange50}">50</a></li>&nbsp;
                                 <li><a href="" onclick="{!c.viewChange100}">100</a></li>
                             </ul>
+                            <!-- View Project with quantity -->
                         </div>
+
+                        <!-- Pagination -->
                         <nav class="col-md-6 pagi" aria-label="Page navigation example">
                             <ul class="pagination">
                                 <lightning:buttonGroup>
@@ -169,10 +182,10 @@
                                 </lightning:buttonGroup>
                             </ul>
                         </nav>
+                        <!-- Pagination -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--End Pagination-->
 </aura:component>

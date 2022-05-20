@@ -1,12 +1,12 @@
 public with sharing class MemberController {
+
+    // get all members
 @AuraEnabled    
 public static list<Member__c> fetchMembers(Integer pageSize, Integer pageNumber){
     System.debug(pageNumber);
     Integer totalRecord = [SELECT count() From Member__c];      
     Integer offset = (pageNumber - 1) * pageSize;
     Integer totalPage = (Integer)Math.ceil(totalRecord/pageSize);     
-     System.debug('---totalpage---');
-     System.debug(totalPage);
     if(pageNumber > totalPage){
         pageNumber = totalPage;
     }    
@@ -28,6 +28,8 @@ mem = [SELECT Id FROM Member__c WHERE Id = :delid];
 delete mem;
 }
 
+
+// search by keywords
 @AuraEnabled
 public static List<Member__c> searchMembers(String searchTerm, Integer pageSize, Integer pageNumber){
     Integer offset = (pageNumber - 1) * pageSize;
@@ -46,6 +48,8 @@ public static List<Member__c> searchMembers(String searchTerm, Integer pageSize,
 
     return result;
 }
+
+// filter members by date
 @AuraEnabled
 public static List<Member__c> filterMembers(Integer option, Integer pageSize, Integer pageNumber){
     Integer offset = (pageNumber - 1) * pageSize;

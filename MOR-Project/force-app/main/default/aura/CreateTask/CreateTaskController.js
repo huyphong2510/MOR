@@ -1,27 +1,22 @@
 ({
-    doInit : function(component, event, helper) {   
-        var action = component.get("c.getTasks");
-        //action.setparm
-        action.setCallback(this,function(response){
-            if (response.getState() === "SUCCESS"){
-                 console.log('success');
-                component.set("v.taskDetails",response.getReturnValue());
-                var resultsToast = $A.get("e.force:showToast");
-                resultsToast.setParams({
-                    "title": "Create",
-                    "message": "The record was created."
-                });            
-            }    
-            else
-            {
-                alert('Error');
+    handleSuccess : function(component, event, helper) {   
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "title": "Notification",
+            "message": "Create records successfully!!",
+            "type" : "SUCCESS"
+        }); 
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef : "c:Task",
+            componentAttributes: {
+                contactId : component.get("v.strRecordId")
             }
         });
-        $A.get('e.force:refreshView').fire();  
-        $A.enqueueAction(action);
-        
-        resultsToast.fire(); 
+        toastEvent.fire();
         evt.fire();
-      
+        $A.get('e.force:refreshView').fire();       
     },
+      
+    
 })

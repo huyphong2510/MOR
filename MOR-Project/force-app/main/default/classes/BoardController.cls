@@ -1,15 +1,17 @@
 public with sharing class BoardController {
+    // get boards
     @AuraEnabled
-    public static kanbanWrap getBoards(String objName, String[] objFields, String kanbanField) {
-        // List <Board__c> lstPickvals = new List <Board__c> ();    
+    public static kanbanWrap getBoards(String objName, String[] objFields, String kanbanField, String projectID) { 
+        System.debug(projectID);
         String[] lstPickvals = new String[] {'To Do','Pending','In Progress','Reviewing','Done'};
-        String query = 'SELECT Task__r.name,Task__r.Status__c,OwnerId, Id, Name, Status__c FROM Board__c';  
+        String query = 'select Name, Project__r.Name, Project__c, Assigner__r.name,Board__c, Board__r.Name,Board__r.Id, Start_Date__c,Status__c, End_Date__c, Duration__c from Task__c';  
         return new kanbanWrap(Database.query(query), lstPickvals);
     }
 
+
+    // update taks status
     @AuraEnabled
     public static String getUpdateStatus(Id recId, String kanbanField, String kanbanNewValue) {
-            System.debug(recId);
             SObject o1 = recId.getSObjectType().newSObject(recId);
             o1.put(kanbanField,kanbanNewValue);
             update o1;
@@ -17,8 +19,8 @@ public with sharing class BoardController {
 
     }
     
-    
-    public class kanbanWrap{
+    // wrapper class Kanban
+    public class KanbanWrap{
         @AuraEnabled
         public List<sObject> records {get;set;}
         @AuraEnabled

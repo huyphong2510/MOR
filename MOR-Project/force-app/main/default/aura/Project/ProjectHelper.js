@@ -31,6 +31,7 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var resultData = response.getReturnValue();
+                console.log('Data:', resultData);
                 if (resultData.totalPage < component.get("v.pageSize")) {
                     component.set("v.isLastPage", true);
                 } else {

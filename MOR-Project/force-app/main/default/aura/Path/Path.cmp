@@ -1,0 +1,45 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <!-- Attributes -->
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="recordError" type="String" />
+    <aura:attribute name="emailMessage" type="String" />
+    <aura:attribute name="hiringStep" type="String" default="Application" />
+
+    <!-- Handlers -->
+    <aura:handler name="change" value="{!v.record}" action="{!c.handleValueChange}" />
+
+    <!--Lightning Data Service -->
+    <force:recordData aura:id="recordLoader" recordId="{! v.recordId }" layoutType="FULL" targetRecord="{! v.record }"
+        targetFields="{! v.simpleRecord }" targetError="{! v.recordError }" recordUpdated="{! c.recordUpdated }"
+        mode="EDIT" />
+
+    <!-- Header -->
+
+    <!-- path -->
+    <lightning:path aura:id="path" recordId="{! v.recordId }" onselect="{! c.onselect }" variant="linear"
+        hideUpdateButton="false">
+    </lightning:path>
+    <!-- path -->
+
+    <!-- start task detail -->
+    <div class="slds-modal__content slds-p-around_medium">
+        <lightning:recordEditForm aura:id="editform" onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}"
+            recordId="{!v.recordId}" objectApiName="Task__c">
+            <lightning:messages />
+            <lightning:inputField fieldName="Name" aura:id="tskName" />
+            <div class="slds-m-top_medium">
+                <lightning:inputField fieldName="Assigner__c" />
+                <lightning:inputField fieldName="Start_Date__c" />
+                <lightning:inputField fieldName="End_Date__c" />
+                <lightning:inputField fieldName="Board__c" />
+                <lightning:inputField fieldName="Status__c" />
+                <lightning:inputField fieldName="Duration__c" />
+                <lightning:inputField fieldName="Project__c" />
+            </div>
+            <lightning:button variant="brand" type="submit" name="save" label="Save" />
+            <lightning:button variant="destructive" label="Delete" onclick="{!c.handleDeleteRecord}" />
+        </lightning:recordEditForm>
+    </div>
+    <!-- end task detail -->
+</aura:component>

@@ -15,6 +15,19 @@
                                }                               
                            });
     },
+    navigateToBoard : function(component, event, helper) {
+
+        var id = component.get("v.projectRecord.Id");
+        console.log('id:', id);
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef : "c:BoardKanBan",
+            componentAttributes: {
+                projectID : component.get("v.projectRecord.Id")
+            }
+        });
+        evt.fire();
+    },
     
     handleDeleteRecord: function(component, event, helper) {
         component.find("recordHandler").deleteRecord($A.getCallback(function(deleteResult) {

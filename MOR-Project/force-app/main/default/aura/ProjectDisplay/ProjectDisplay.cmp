@@ -1,7 +1,8 @@
-<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction"
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:isUrlAddressable"
     access="global">
     <aura:attribute name="record" type="object" />
     <aura:attribute name="projectRecord" type="object" />
+    <aura:attribute name="pageReference" type="String" default="Boardkanban" />
     <!-- pop up -->
     <aura:attribute name="strRecId" type="String" />
     <lightning:overlayLibrary aura:id="overlayLibDemo" />
@@ -9,12 +10,14 @@
     <force:recordData aura:id="recordHandler" fields="Id" recordId="{!v.recordId}" targetError="{!v.recordError}"
         recordUpdated="{!c.handleRecordUpdated}" />
     <aura:attribute name="recordSaveError" type="String" default="" />
-    <force:recordData aura:id="record" fields="  Status__c, Company__r.Name, PM__r.Name, Name" recordId="{!v.recordId}"
+    <force:recordData aura:id="record" fields="  Id,Board__c,Status__c, Company__r.Name, PM__r.Name, Name" recordId="{!v.recordId}"
         targetRecord="{!v.record}" targetError="{!v.recordSaveError}" targetFields="{!v.projectRecord}" mode="VIEW" />
 
 
 
     <lightning:card title="{!v.projectRecord.Name}">
+
+        <!-- Start show detail -->
         <table>
             <thead>
                 <tr>
@@ -45,6 +48,7 @@
                     <td>
                         <p class="slds-text-heading--small">
                             <lightning:formattedText title="Status" value="{!v.projectRecord.Status__c}" />
+                            {!v.projectRecord.Board__c}
                         </p>
                     </td>
                     <td>
@@ -53,15 +57,18 @@
                             <lightning:button variant="destructive" label="Delete" onclick="{!c.handleDeleteRecord}" />
                         </p>
                     </td>
+
+                    <!-- Redirect to Board -->
                     <td>
-                        <form target="_blank" action="https://mor-project-dev-ed.lightning.force.com/lightning/n/Board">
-                            <input type="submit" value="Board" />
-                        </form>
+                        <lightning:button variant="brand-outline" label="Board" title="Brand action" onclick="{! c.navigateToBoard }" />
                     </td>
+                    <!-- Redirect to Board -->
+
 
                 </tr>
             </tbody>
         </table>
+        <!-- End show detail -->
     </lightning:card>
     <aura:if isTrue="{!not(empty(v.recordSaveError))}">
         <div class="recordError">

@@ -20,11 +20,12 @@
                     <lightning:inputField fieldName="Name" aura:id="tskName" />
                     <lightning:outputField fieldName="LastModifiedById" />
                     <lightning:inputField fieldName="Assigner__c" />
-                    <lightning:outputField fieldName="Start_Date__c" />
+                    <lightning:inputField fieldName="Start_Date__c" />               
                     <lightning:inputField fieldName="End_Date__c" />
+                    <lightning:inputField fieldName="Board__c" />  
+                    <lightning:inputField fieldName="Status__c" />
                     <lightning:inputField fieldName="Duration__c" />
                     <lightning:inputField fieldName="Project__c" />
-                    <lightning:inputField fieldName="Status__c" />
                     <div class="slds-m-top_medium">
                         <lightning:button variant="brand" type="submit" name="save" label="Save" />
                         <lightning:button variant="destructive" label="Delete"  onclick="{!c.handleDeleteRecord}" />
