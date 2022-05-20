@@ -49,4 +49,38 @@
 
         $A.enqueueAction(action);
     },
+    handleDeleteRecord: function (component, event, helper, idx) {
+        // var idx = event.target.id;
+        console.log("helper");
+        console.log(idx);
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "title": "Notification",
+            "message": "Delete records successfully!!",
+            "type": "SUCCESS"
+        });
+        var action = component.get('c.deleteMember');
+        action.setParams({
+            delid: idx,
+        })
+        action.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                $A.get('e.force:refreshView').fire();
+                toastEvent.fire();
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message")
+                    }
+                } else {
+                    console.log('Unknow Error');
+                }
+            }
+        });
+       
+        $A.enqueueAction(action);
+     },
 })

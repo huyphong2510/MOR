@@ -9,17 +9,6 @@
     <lightning:overlayLibrary aura:id="overlayLibDemo" />
     <aura:attribute name="showConfirmDialog" type="boolean" default="false" />
     <!-- pop up-->
-      <!--aura handler with waiting and donewaiting events-->
-      <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
-    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
-     
- 
-     <!--loading spinner start-->
-     <div class="exampleHolder">
-        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
-    </div>
-    <!-- Loading spinner end-->   
-
 
     <!-- header -->
     <div class="slds-page-header">
@@ -37,10 +26,6 @@
         </div>
     </div>
 
-    <!-- create button -->
-    <lightning:button label="Create" title="Brand action" onclick="{! c.createBoard }" />
-    <!-- create button -->
-
     <!-- Status title -->
     <div style="padding:0.5rem;">
         <aura:iteration var="pickVal" items="{!v.kanbanData.pickVals}">
@@ -48,7 +33,7 @@
                 <div class="slds-grid slds-grid_vertical">
                     <div>
                         <div class="slds-media slds-no-space slds-has-divider_bottom-space slds-media_center"
-                            style="{!'width:calc(100vw/'+(v.kanbanData.pickVals.length+1)+')'}">
+                            style="width:100vw/5.88px'">
                             <div class="slds-media__body">
                                 <h1 class="slds-page-header__title slds-align-middle slds-truncate"
                                     style="background-color: e1f3f5; width:100%" title="{!pickVal}">

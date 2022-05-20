@@ -94,8 +94,17 @@
 
         $A.enqueueAction(action);
     },
-    handleDeleteRecord: function (component, event, helper) {
+    handleConfirmDialog : function(component, event, helper) {  
+        component.set('v.showConfirmDialog', true);
         var idx = event.target.id;
+        // console.log('confirm:'+ idx);
+        idx.setCallback(this, this.handleDeleteRecord);
+        $A.enqueueAction(idx);
+    
+    },
+    handleDeleteRecord: function (component, event, helper, idx) {
+        //var idx = event.target.id;
+        console.log(idx);
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             "title": "Notification",
@@ -110,6 +119,7 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 $A.get('e.force:refreshView').fire();
+                toastEvent.fire();
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
@@ -122,9 +132,12 @@
                 }
             }
         });
-        toastEvent.fire();
+       
         $A.enqueueAction(action);
-    },
+     },
+    
+
+  
     handleRecordUpdated: function (component, event, helper) {
         var eventParams = event.getParams();
         if (eventParams.changeType === "CHANGED") {
@@ -230,10 +243,7 @@
         helper.handleSearch(component, helper, event);
     },
 
-    handleConfirmDialog : function(component, event, helper) {
-        component.set('v.showConfirmDialog', true);
-    },
-     
+   
     handleConfirmDialogNo : function(component, event, helper) {
         component.set('v.showConfirmDialog', false);
     },

@@ -37,24 +37,6 @@
             });
     },
 
-    // create a new board
-    createBoard: function (component, event, helper) {
-        var strTskId = component.get("v.recordId");
-        $A.createComponent("c:CreateBoard",
-            { strRecordId: strTskId },
-            function (result, status) {
-                if (status === "SUCCESS") {
-                    component.find('overlayLibDemo').showCustomModal({
-                        header: "Create Board",
-                        body: result,
-                        showCloseButton: true,
-                        cssClass: "mymodal",
-                    })
-                }
-            });
-    },
-
-
     // when you start drop
     allowDrop: function (component, event, helper) {
         event.preventDefault();

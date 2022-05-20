@@ -22,7 +22,6 @@
                     <lightning:inputField fieldName="Assigner__c" />
                     <lightning:inputField fieldName="Start_Date__c" />               
                     <lightning:inputField fieldName="End_Date__c" />
-                    <lightning:inputField fieldName="Board__c" />  
                     <lightning:inputField fieldName="Status__c" />
                     <lightning:inputField fieldName="Duration__c" />
                     <lightning:inputField fieldName="Project__c" />

@@ -18,6 +18,7 @@
                     <lightning:inputField fieldName="Name" aura:id="prjName" />
                     <lightning:inputField fieldName="Id__c" />
                     <lightning:inputField fieldName="OwnerID" />
+                    <lightning:inputField fieldName="Country__c" />  
                     <lightning:inputField fieldName="Start_Date__c" />      
                     <lightning:inputField fieldName="End_Date__c" />
                     <lightning:inputField fieldName="Leader__c" />
