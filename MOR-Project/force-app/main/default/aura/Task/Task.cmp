@@ -74,6 +74,18 @@
     </div>
     <!-- end cofirm delete -->
 
+      <!--aura handler with waiting and donewaiting events-->
+      <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+     
+ 
+     <!--loading spinner start-->
+     <div class="exampleHolder">
+        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    </div>
+    <!-- Loading spinner end-->   
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 ms-sm-auto col-lg-12 px-md-4">

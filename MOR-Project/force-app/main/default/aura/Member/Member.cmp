@@ -39,8 +39,18 @@
     <!-- pop up -->
     <lightning:overlayLibrary aura:id="overlayLibDemo" />
     <aura:attribute name="strRecordId" type="String" />
-
     <!-- pop up -->
+
+      <!--aura handler with waiting and donewaiting events-->
+      <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+     
+ 
+     <!--loading spinner start-->
+     <div class="exampleHolder">
+        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    </div>
+    <!-- Loading spinner end-->   
 
     <!-- confirm delete -->
     <div class="slds-m-around_xx-large">

@@ -32,6 +32,17 @@
                           /dist/css/bootstrap.min.css" scripts='/html-css/dashboard.js,
                            /dist/js/bootstrap.bundle.min.js' afterScriptsLoaded="{!c.setup}" />
     <!-- UI -->
+
+      <!--aura handler with waiting and donewaiting events-->
+      <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+     
+     <!--loading spinner start-->
+     <div class="exampleHolder">
+        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    </div>
+    <!-- Loading spinner end-->   
+
     <!-- confirm delete -->
     <div class="slds-m-around_xx-large">
         <aura:if isTrue="{!v.showConfirmDialog}">

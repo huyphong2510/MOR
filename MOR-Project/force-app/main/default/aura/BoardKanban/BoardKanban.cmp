@@ -9,6 +9,17 @@
     <lightning:overlayLibrary aura:id="overlayLibDemo" />
     <aura:attribute name="showConfirmDialog" type="boolean" default="false" />
     <!-- pop up-->
+      <!--aura handler with waiting and donewaiting events-->
+      <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+     
+ 
+     <!--loading spinner start-->
+     <div class="exampleHolder">
+        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    </div>
+    <!-- Loading spinner end-->   
+
 
     <!-- header -->
     <div class="slds-page-header">
@@ -28,7 +39,9 @@
 
     <!-- create button -->
     <lightning:button label="Create" title="Brand action" onclick="{! c.createBoard }" />
+    <!-- create button -->
 
+    <!-- Status title -->
     <div style="padding:0.5rem;">
         <aura:iteration var="pickVal" items="{!v.kanbanData.pickVals}">
             <div class="stageContainer" style="width:calc(100vw/5.88)">
@@ -47,12 +60,17 @@
                 <div>
                 </div>
                 <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone"
-                data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
-                <aura:iteration var="objRecord" items="{!v.kanbanData.records}">
-    <aura:if isTrue="{!and(pickVal == objRecord.Status__c, objRecord.Project__c == v.projectID ) }">
-                        <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
-                            id="{!objRecord.Id}" style="background-color: #f5feff;">
-                           <article class="slds-tile slds-tile_board" >
+                    data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
+    <!-- Status title -->
+
+    <!-- List Board -->
+                    <aura:iteration var="objRecord" items="{!v.kanbanData.records}">
+                        <!-- Check condition to show -->
+                        <aura:if isTrue="{!and(pickVal == objRecord.Status__c, objRecord.Project__c == v.projectID ) }">
+                            <!-- Check condition to show -->
+                            <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
+                                id="{!objRecord.Id}" style="background-color: #f5feff;">
+                                <article class="slds-tile slds-tile_board">
                                     <h3 class="slds-truncate" title="">
                                         <div class="slds-tile__detail slds-text-body_small">
                                             <a href="{!'/' + objRecord.Id}">
@@ -72,16 +90,19 @@
                                         </div>
                                         <div>
                                             <p>Assigner: {!objRecord.Assigner__r.Name}</p>
-                                        </div>                                           
+                                        </div>
                                     </h3>
+                                    <!-- Edit button -->
                                     <button class="button4" id="{!objRecord.Id}" onclick="{!c.editTask}">Edit</button>
+                                    <!-- Edit button -->
                                 </article>
-                        </li>
-                    </aura:if>
-                </aura:iteration>
-            </ul>
+                            </li>
+                        </aura:if>
+                    </aura:iteration>
+                </ul>
             </div>
         </aura:iteration>
+        <!-- List Board -->
     </div>
 
 
