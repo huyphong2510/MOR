@@ -40,24 +40,29 @@
                         <aura:if isTrue="{!pickVal == objRecord.Status__c}">
                             <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
                                 id="{!objRecord.Id}">
-                                <article class="slds-tile slds-tile_board">
-                                    <h3 class="slds-truncate" title="">
-                                        <div class="slds-tile__detail slds-text-body_small">
-                                            <a href="{!'/' + objRecord.Id}">
-                                                {!objRecord.Name}
-                                            </a>
-                                        </div>
-                                        <div class="slds-tile__detail slds-text-body_small">
-                                            <a href="{!'/' + Project__c}">
-                                                {!objRecord.Task__r.Name}
-                                            </a>
-                                        </div>                                   
-                                        <div>
-                                            <p>Status: {!objRecord.Task__r.Status__c}</p>
-                                        </div>
-                                    </h3>
-
-                                </article>
+                               <article class="slds-tile slds-tile_board" >
+                                        <h3 class="slds-truncate" title="">
+                                            <div class="slds-tile__detail slds-text-body_small">
+                                                <a href="{!'/' + objRecord.Id}">
+                                                    {!objRecord.Name}
+                                                </a>
+                                            </div>
+                                            <div class="slds-tile__detail slds-text-body_small">
+                                                <a href="{!'/' + Project__c}">
+                                                    {!objRecord.Task__r.Name}
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <p>Status: {!objRecord.Status__c}</p>
+                                            </div>
+                                            <div>
+                                                <p>Project: {!objRecord.Project__r.Name}</p>
+                                            </div>
+                                            <div>
+                                                <p>Assigner: {!objRecord.Assigner__r.Name}</p>
+                                            </div>                                           
+                                        </h3>
+                                    </article>
                             </li>
                         </aura:if>
                     </aura:iteration>
