@@ -37,7 +37,7 @@
                 <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone"
                     data-Pick-Val="{!pickVal}" style="height:70vh;overflow-y:auto;">
                     <aura:iteration var="objRecord" items="{!v.kanbanData.records}">
-                        <aura:if isTrue="{!pickVal == objRecord.Status__c}">
+        <aura:if isTrue="{!and(pickVal == objRecord.Status__c, objRecord.Project__c == v.projectID ) }">
                             <li class="slds-item slds-m-around_small" draggable="true" ondragstart="{!c.drag}"
                                 id="{!objRecord.Id}">
                                <article class="slds-tile slds-tile_board" >
